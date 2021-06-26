@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/wether-app/static/js/main.bb5a0d2a.chunk.js",
-    "main.js.map": "/wether-app/static/js/main.bb5a0d2a.chunk.js.map",
+    "main.js": "/wether-app/static/js/main.560f7d5c.chunk.js",
+    "main.js.map": "/wether-app/static/js/main.560f7d5c.chunk.js.map",
     "runtime-main.js": "/wether-app/static/js/runtime-main.6aab552e.js",
     "runtime-main.js.map": "/wether-app/static/js/runtime-main.6aab552e.js.map",
-    "static/js/2.8628f803.chunk.js": "/wether-app/static/js/2.8628f803.chunk.js",
-    "static/js/2.8628f803.chunk.js.map": "/wether-app/static/js/2.8628f803.chunk.js.map",
+    "static/js/2.64088eff.chunk.js": "/wether-app/static/js/2.64088eff.chunk.js",
+    "static/js/2.64088eff.chunk.js.map": "/wether-app/static/js/2.64088eff.chunk.js.map",
     "index.html": "/wether-app/index.html",
-    "static/js/2.8628f803.chunk.js.LICENSE.txt": "/wether-app/static/js/2.8628f803.chunk.js.LICENSE.txt"
+    "static/js/2.64088eff.chunk.js.LICENSE.txt": "/wether-app/static/js/2.64088eff.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.6aab552e.js",
-    "static/js/2.8628f803.chunk.js",
-    "static/js/main.bb5a0d2a.chunk.js"
+    "static/js/2.64088eff.chunk.js",
+    "static/js/main.560f7d5c.chunk.js"
   ]
 }

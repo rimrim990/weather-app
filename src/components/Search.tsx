@@ -1,6 +1,7 @@
 /* eslint-disable react/state-in-constructor */
 import React from 'react';
 import Weather from './Weather';
+import './Search.css';
 
 interface MyState {
   city: string;
@@ -39,7 +40,7 @@ class Search extends React.Component<unknown, MyState> {
         {isClicked ? (
           <Weather city={city} isClicked={isClicked} />
         ) : (
-          <div>typing...</div>
+          <div className="content">typing...</div>
         )}
       </section>
     );

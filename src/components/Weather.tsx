@@ -2,6 +2,7 @@
 /* eslint-disable react/state-in-constructor */
 import React from 'react';
 import axios from 'axios';
+import './Weather.css';
 
 interface MyProps {
   city: string;
@@ -9,13 +10,15 @@ interface MyProps {
 }
 interface MyState {
   isLoading: boolean;
-  weather: Array<Record<string, number | string>>;
+  weather: Array<Record<string, string>>;
+  temp: Record<string, number>;
 }
 
 class Weather extends React.Component<MyProps, MyState> {
   state: MyState = {
     isLoading: true,
     weather: [],
+    temp: {},
   };
 
   componentDidMount() {
@@ -26,14 +29,15 @@ class Weather extends React.Component<MyProps, MyState> {
   getData = async (city: string) => {
     try {
       const {
-        data: { weather },
+        data: { weather, main },
       } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=5f2259e851f23e2fc4a48a9deb127b54`,
+        `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${city}&appid=5f2259e851f23e2fc4a48a9deb127b54`,
       );
-      this.setState({ weather, isLoading: false });
+      this.setState({ weather, isLoading: false, temp: main });
     } catch {
       this.setState({
-        weather: [{ msg: '404 : Not Found' }],
+        weather: [],
+        temp: {},
         isLoading: false,
       });
     }
@@ -41,20 +45,42 @@ class Weather extends React.Component<MyProps, MyState> {
 
   render() {
     const { city, isClicked } = this.props;
-    const { isLoading, weather } = this.state;
-    return isLoading || !isClicked ? (
-      <div>Loading...</div>
+    const { isLoading, weather, temp } = this.state;
+    return isLoading || !isClicked || !weather.length || !temp ? (
+      <div className="content load">Loading...</div>
     ) : (
-      <div>
-        <h1>{city}</h1>
-        <ul>
-          {Object.entries(weather[0]).map((arg, index) => {
-            return (
-              <li key={index}>
-                {arg[0]} : {arg[1]}
-              </li>
-            );
-          })}
+      <div className="content">
+        <h1>{city[0].toUpperCase() + city.substring(1)}</h1>
+        <ul className="weather list">
+          <li className="name">
+            <span>{weather[0].main}</span>
+          </li>
+          <li className="desc">
+            <p>{weather[0].description}</p>
+          </li>
+          <li className="icon">
+            <img
+              alt={weather[0].main}
+              src={`https://openweathermap.org/img/w/${weather[0].icon}.png`}
+            />
+          </li>
+        </ul>
+        <ul className="temp list">
+          <li>
+            low
+            <br />
+            <span className="data">{temp.temp_min}&#8451;</span>
+          </li>
+          <li>
+            temp
+            <br />
+            <span className="data">{temp.temp}&#8451;</span>
+          </li>
+          <li>
+            high
+            <br />
+            <span className="data">{temp.temp_max}&#8451;</span>
+          </li>
         </ul>
       </div>
     );

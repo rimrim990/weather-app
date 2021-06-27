@@ -1,0 +1,8 @@
+.weather-forecast .search .search-input {
+  width: 40%;
+  text-align: center;
+}
+
+.weather-forecast .search .search-button {
+  width: 10%;
+}

@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   return (
     <div className="main">
-      <h1>today&apos;s weather</h1>
+      <h1>5 Day Weather Forecast</h1>
       <Search />
     </div>
   );

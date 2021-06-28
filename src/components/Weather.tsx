@@ -3,6 +3,7 @@
 import React from 'react';
 import axios from 'axios';
 import './Weather.css';
+import Detail from './Detail';
 
 interface MyProps {
   city: string;
@@ -10,15 +11,13 @@ interface MyProps {
 }
 interface MyState {
   isLoading: boolean;
-  weather: Array<Record<string, string>>;
-  temp: Record<string, number>;
+  list: Array<Record<string, any>>;
 }
 
 class Weather extends React.Component<MyProps, MyState> {
   state: MyState = {
     isLoading: true,
-    weather: [],
-    temp: {},
+    list: [],
   };
 
   componentDidMount() {
@@ -29,15 +28,14 @@ class Weather extends React.Component<MyProps, MyState> {
   getData = async (city: string) => {
     try {
       const {
-        data: { weather, main },
+        data: { list },
       } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${city}&appid=5f2259e851f23e2fc4a48a9deb127b54`,
+        `https://api.openweathermap.org/data/2.5/forecast?units=metric&q=${city}&appid=5f2259e851f23e2fc4a48a9deb127b54`,
       );
-      this.setState({ weather, isLoading: false, temp: main });
+      this.setState({ list, isLoading: false });
     } catch {
       this.setState({
-        weather: [],
-        temp: {},
+        list: [],
         isLoading: false,
       });
     }
@@ -45,43 +43,35 @@ class Weather extends React.Component<MyProps, MyState> {
 
   render() {
     const { city, isClicked } = this.props;
-    const { isLoading, weather, temp } = this.state;
-    return isLoading || !isClicked || !weather.length || !temp ? (
+    const { isLoading, list } = this.state;
+    const dayList: string[] = [];
+    const weatherList: any[][] = Array(6)
+      .fill(null)
+      .map(() => []);
+
+    if (!isLoading || isClicked || list.length) {
+      list.forEach((data) => {
+        const [day] = data.dt_txt.split(' ');
+        const pos: number = dayList.indexOf(day);
+        if (pos === -1) {
+          dayList.push(day);
+          weatherList[dayList.length - 1].push(data);
+        } else {
+          weatherList[pos].push(data);
+        }
+      });
+    }
+
+    return isLoading || !isClicked || !list.length ? (
       <div className="content load">Loading...</div>
     ) : (
-      <div className="content">
+      <div>
         <h1>{city[0].toUpperCase() + city.substring(1)}</h1>
-        <ul className="weather list">
-          <li className="name">
-            <span>{weather[0].main}</span>
-          </li>
-          <li className="desc">
-            <p>{weather[0].description}</p>
-          </li>
-          <li className="icon">
-            <img
-              alt={weather[0].main}
-              src={`https://openweathermap.org/img/w/${weather[0].icon}.png`}
-            />
-          </li>
-        </ul>
-        <ul className="temp list">
-          <li>
-            low
-            <br />
-            <span className="data">{temp.temp_min}&#8451;</span>
-          </li>
-          <li>
-            temp
-            <br />
-            <span className="data">{temp.temp}&#8451;</span>
-          </li>
-          <li>
-            high
-            <br />
-            <span className="data">{temp.temp_max}&#8451;</span>
-          </li>
-        </ul>
+        {weatherList.map((item, index) => {
+          return (
+            <Detail key={dayList[index]} list={item} day={dayList[index]} />
+          );
+        })}
       </div>
     );
   }

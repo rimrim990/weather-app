@@ -1,34 +1,36 @@
-.content {
-  padding: 40px;
-  margin: 30px;
+.content-area section {
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+  width: 720px;
+  height: 780px;
+}
+
+.content-area section .content-load {
   border: 1px solid lightgrey;
   color: grey;
-}
-
-.content h1 {
-  margin: 0;
-}
-
-.content .desc p {
-  margin: 0;
-}
-
-.content .list {
-  list-style: none;
-  padding: 0;
-  margin: 10px;
-}
-
-.content .list li {
-  text-decoration: none;
-}
-
-.content .temp.list {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-.content .temp.list .data {
+  height: 200px;
+  margin-top: 45px;
   font-weight: bold;
+  font-size: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.content-area article {
+  float: left;
+  width: 120px;
+}
+
+.content-area article .nav-btn.selected {
+  font-weight: bold;
+  background-color: lightgrey;
+  border: 1px dashed white;
+}
+
+.content-area article .nav-btn {
+  border: 1px dashed lightgrey;
+  display: inline-block;
+  width: 120px;
+  box-sizing: border-box;
 }

@@ -22,8 +22,8 @@ class Search extends React.Component<unknown, MyState> {
   render() {
     const { city, isClicked } = this.state;
     return (
-      <section className="weather-forecast">
-        <div className="search">
+      <main>
+        <div className="search-area">
           <input
             className="search-input"
             type="text"
@@ -32,7 +32,7 @@ class Search extends React.Component<unknown, MyState> {
           />
           <input
             type="submit"
-            className="search-button"
+            className="search-submit"
             onClick={this.handleClick}
             value="Go"
           />
@@ -40,9 +40,13 @@ class Search extends React.Component<unknown, MyState> {
         {isClicked ? (
           <Weather city={city} isClicked={isClicked} />
         ) : (
-          <div className="content">typing...</div>
+          <div className="content-area">
+            <section>
+              <div className="content-load">Please enter city name...</div>
+            </section>
+          </div>
         )}
-      </section>
+      </main>
     );
   }
 }

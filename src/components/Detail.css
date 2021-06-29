@@ -1,0 +1,44 @@
+.content {
+  border: 1px solid lightgrey;
+  color: grey;
+  display: none;
+  position: absolute;
+  top: 25px;
+  left: 0px;
+  right: 0px;
+}
+
+.content.active {
+  display: block;
+}
+
+.content ul {
+  padding: 0;
+  float: left;
+  width: 159px;
+  margin: 5px 10px;
+}
+
+.content ul::after {
+  content: '';
+  clear: both;
+  display: block;
+}
+
+.content .list {
+  list-style: none;
+  padding: 0;
+  margin: 10px;
+}
+
+.content .list li {
+  text-decoration: none;
+}
+
+.content .temp .desc {
+  font-weight: bold;
+}
+
+.content .temp .val {
+  font-size: 12px;
+}

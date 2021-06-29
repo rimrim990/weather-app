@@ -1,26 +1,28 @@
 import React from 'react';
+import './Detail.css';
 
 interface AppProps {
   list: Array<Record<string, any>>;
   day: string;
+  lclass: string;
 }
 
-function Detail({ list, day }: AppProps): JSX.Element {
+function Detail({ list, day, lclass }: AppProps): JSX.Element {
   return (
-    <div className="content">
-      <h1>{day}</h1>
-      {list.map((item) => {
+    <div className={lclass}>
+      {list.map((item, index) => {
         return (
-          <ul className={day} key={day}>
+          // eslint-disable-next-line react/no-array-index-key
+          <ul key={index}>
             <h3>{item.dt_txt.split(' ')[1]}</h3>
             <div className="weather list">
-              <li className="name">
+              <li>
                 <span>{item.weather[0].main}</span>
               </li>
-              <li className="desc">
+              <li>
                 <p>{item.weather[0].description}</p>
               </li>
-              <li className="icon">
+              <li>
                 <img
                   alt={item.weather[0].main}
                   src={`https://openweathermap.org/img/w/${item.weather[0].icon}.png`}
@@ -29,19 +31,19 @@ function Detail({ list, day }: AppProps): JSX.Element {
             </div>
             <div className="temp list">
               <li>
-                <span>low</span>
+                <span className="desc">low</span>
                 <br />
-                <span>{item.main.temp_min}</span>
+                <span className="val">{item.main.temp_min}&#8451;</span>
               </li>
               <li>
-                <span>temp</span>
+                <span className="desc">temp</span>
                 <br />
-                <span>{item.main.temp}</span>
+                <span className="val">{item.main.temp}&#8451;</span>
               </li>
               <li>
-                <span>high</span>
+                <span className="desc">high</span>
                 <br />
-                <span>{item.main.temp_max}</span>
+                <span className="val">{item.main.temp_max}&#8451;</span>
               </li>
             </div>
           </ul>

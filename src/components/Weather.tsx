@@ -1,5 +1,6 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/state-in-constructor */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import axios from 'axios';
 import './Weather.css';
@@ -12,12 +13,15 @@ interface MyProps {
 interface MyState {
   isLoading: boolean;
   list: Array<Record<string, any>>;
+  code: number;
 }
 
 class Weather extends React.Component<MyProps, MyState> {
+  // eslint-disable-next-line react/state-in-constructor
   state: MyState = {
     isLoading: true,
     list: [],
+    code: 0,
   };
 
   componentDidMount() {
@@ -28,22 +32,38 @@ class Weather extends React.Component<MyProps, MyState> {
   getData = async (city: string) => {
     try {
       const {
-        data: { list },
+        data: { list, cod },
       } = await axios.get(
         `https://api.openweathermap.org/data/2.5/forecast?units=metric&q=${city}&appid=5f2259e851f23e2fc4a48a9deb127b54`,
       );
-      this.setState({ list, isLoading: false });
-    } catch {
+      this.setState({ list, isLoading: false, code: cod });
+    } catch (error) {
       this.setState({
         list: [],
         isLoading: false,
+        code: 404,
       });
+    }
+  };
+
+  makeActive = (event: any) => {
+    const dlist = document.getElementsByClassName('content');
+    const alist = document.getElementsByClassName('nav-btn');
+    for (let i = 0; i < dlist.length; i += 1) {
+      if (event.target === alist[i]) alist[i].classList.add('selected');
+      else alist[i].classList.remove('selected');
+      if (dlist[i] === event.target.nextSibling) {
+        dlist[i].classList.add('active');
+      } else {
+        dlist[i].classList.remove('active');
+      }
     }
   };
 
   render() {
     const { city, isClicked } = this.props;
-    const { isLoading, list } = this.state;
+    const { isLoading, list, code } = this.state;
+    const msg = code === 404 ? 'Not Found...' : 'Loading...';
     const dayList: string[] = [];
     const weatherList: any[][] = Array(6)
       .fill(null)
@@ -63,15 +83,29 @@ class Weather extends React.Component<MyProps, MyState> {
     }
 
     return isLoading || !isClicked || !list.length ? (
-      <div className="content load">Loading...</div>
+      <div className="content-area">
+        <section>
+          <div className="content-load">{msg}</div>
+        </section>
+      </div>
     ) : (
-      <div>
-        <h1>{city[0].toUpperCase() + city.substring(1)}</h1>
-        {weatherList.map((item, index) => {
-          return (
-            <Detail key={dayList[index]} list={item} day={dayList[index]} />
-          );
-        })}
+      <div className="content-area">
+        <h3>{city[0].toUpperCase() + city.substring(1).toLowerCase()}</h3>
+        <section>
+          {weatherList.map((item, index) => {
+            const aclass = index === 0 ? 'nav-btn selected' : 'nav-btn';
+            const lclass = index === 0 ? 'content active' : 'content';
+            return (
+              // eslint-disable-next-line react/no-array-index-key
+              <article key={index}>
+                <a className={aclass} onClick={this.makeActive}>
+                  {dayList[index]}
+                </a>
+                <Detail list={item} day={dayList[index]} lclass={lclass} />
+              </article>
+            );
+          })}
+        </section>
       </div>
     );
   }

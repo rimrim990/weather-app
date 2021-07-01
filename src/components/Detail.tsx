@@ -16,7 +16,7 @@ function Detail({ list, day, lclass }: AppProps): JSX.Element {
           <ul key={index}>
             <h3>{item.dt_txt.split(' ')[1]}</h3>
             <div className="weather list">
-              <li>
+              <li className="desc">
                 <span>{item.weather[0].main}</span>
               </li>
               <li>

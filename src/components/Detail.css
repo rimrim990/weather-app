@@ -9,20 +9,18 @@
 }
 
 .content.active {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .content ul {
   padding: 0;
-  float: left;
-  width: 159px;
+  display: inline-block;
+  width: 155px;
+  height: 255px;
   margin: 5px 10px;
-}
-
-.content ul::after {
-  content: '';
-  clear: both;
-  display: block;
+  flex-basis: auto;
 }
 
 .content .list {
@@ -35,7 +33,16 @@
   text-decoration: none;
 }
 
-.content .temp .desc {
+.content .list li p {
+  font-size: 15px;
+}
+
+.content .temp li {
+  display: inline-block;
+  width: 45px;
+}
+
+.content .list .desc {
   font-weight: bold;
 }
 

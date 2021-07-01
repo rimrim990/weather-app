@@ -3,7 +3,7 @@
   position: relative;
   margin: 0 auto;
   width: 720px;
-  height: 780px;
+  min-height: 720px;
 }
 
 .content-area section .content-load {
